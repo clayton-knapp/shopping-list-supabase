@@ -129,3 +129,8 @@ footer {
 .auth-container button {
     margin: 10px;
 }
+
+form label{
+    display: block;
+    
+}

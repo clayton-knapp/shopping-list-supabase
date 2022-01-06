@@ -7,6 +7,8 @@ const logoutButton = document.getElementById('logout');
 
 
 //EVENT LISTENERS
+
+
 logoutButton.addEventListener('click', () => {
     logout();
 });

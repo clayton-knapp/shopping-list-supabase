@@ -23,3 +23,12 @@ Additional considerations:
   - What needs to live in a persistence layer?
 - Is there some state we need to initialize?
 - Ask: should any of this work be abstracted into functions? (i.e., is the work complicated? can it be resused?)
+
+
+
+HTML SETUP
+- Form to input quantity and item
+    - 2 input fields
+    - submit button
+- Delete all Items Button
+- Empty Div to display list of returned items

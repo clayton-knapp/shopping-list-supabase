@@ -17,6 +17,20 @@
     <button id="logout">Logout</button>
     <main>
         <h1>Shopping List w/ Supabase!</h1>
+        <form action="" id=add-item-form>
+            <label for="">
+                Quantity: 
+                <input type="number" min=1 name="quantity">
+            </label>
+            <label for="">
+                Item: 
+                <input type="text" name="item">
+            </label>
+            <button>Add to List</button>
+        </form>
+        <div id="list">
+            <!-- shopping list items go here -->
+        </div>
     </main>
     <footer>
         <div class="copy gutter-right">&copy; 2021 Alchemy Code Lab</div>
