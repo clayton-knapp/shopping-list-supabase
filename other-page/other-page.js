@@ -21,10 +21,11 @@ const deleteButton = document.querySelector('#delete-button');
 const listEl = document.querySelector('#list');
 
 // STRETCH - list of users
-const usersListEl = document.getElementById('users-list');
 const selectedUsersListEl = document.getElementById('selected-users-list');
+const usersDropdown = document.getElementById('users-dropdown');
 
 const currentUserEl = document.getElementById('current-user');
+
 
 
 //EVENT LISTENERS
@@ -73,6 +74,14 @@ deleteButton.addEventListener('click', async()=> {
     displayList();
 });
 
+//STRETCH USER DROPDOWN
+usersDropdown.addEventListener('change', async() => {
+    //on change calls the display and fetch users list passing in user id
+    await displaySelectedUsersList(usersDropdown.value);
+
+});
+
+
 
 logoutButton.addEventListener('click', () => {
     logout();
@@ -81,7 +90,7 @@ logoutButton.addEventListener('click', () => {
 // FUNCTIONS
 
 async function displayList() {
-    // - either makes a call with fetchItems or gets passed an object returned from an early server call - but is passed object just the single and not the whole array of objects?!
+    // - makes a call with fetchItems 
     const user = await getUser(); // actually gets session
     const items = await fetchItems(user.user.id);
 
@@ -135,19 +144,15 @@ export async function displayUsers() {
     for (let user of users) {
         //exclude current signed in user from this list
         if (user.user_id !== currentUserId) {
+            // create optionEl
+            const userOptionEl = document.createElement('option');
+            //set text content to user email to display
+            userOptionEl.textContent = user.user_email;
+            //set the value to the user id to pass to fetch function
+            userOptionEl.value = user.user_id;
 
-            const userEmail = document.createElement('p');
-            userEmail.textContent = '• ' + user.user_email;
-            userEmail.classList.add('user-email');
-    
-            // EVENT LISTENER FOR EACH userEmail
-            userEmail.addEventListener('click', async() => {
-                // - display that users lists
-                await displaySelectedUsersList(user.user_id);
-            });
-    
-                
-            usersListEl.append(userEmail);
+            //append the optionEl to the dropdown
+            usersDropdown.append(userOptionEl);        
         }
     }
 }
