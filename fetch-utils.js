@@ -13,7 +13,6 @@ export async function createItem(quantity, name) {
             name: name,
             bought: false
         });
-        // .order('bought');
 
     return checkError(response);
 }
@@ -22,7 +21,8 @@ export async function createItem(quantity, name) {
 export async function fetchItems() {
     const response = await client
         .from('shopping_list')
-        .select();
+        .select()
+        .order('bought');
 
     return checkError(response);
 }

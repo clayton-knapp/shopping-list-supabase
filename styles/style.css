@@ -150,3 +150,12 @@ form label{
     font-family: cursive;
     font-size: 2em;
 }
+
+#delete-button {
+    position: fixed;
+    left: 20px;
+    top: 90px;
+    background-color: red;
+    border-radius: 5px;
+    height: 30px;
+}
