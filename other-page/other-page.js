@@ -28,11 +28,10 @@ addItemForm.addEventListener('submit', async(e)=> {
 
     //     - calls createItem which inserts to Supabase
     //     - passes in values, inserts with bought = false (also set up by default in supabase)
-    const items = await createItem(quantity, name);
-    console.log(items);
+    await createItem(quantity, name);
 
     //     - fetches and displays new list
-    displayList(items);
+    displayList();
 
     addItemForm.reset();
 
@@ -41,8 +40,7 @@ addItemForm.addEventListener('submit', async(e)=> {
 // LOAD
 window.addEventListener('load', async() => {
     // - fetches and displays list
-    const items = await fetchItems();
-    displayList(items);
+    await displayList();
 });
 
 
@@ -52,8 +50,9 @@ logoutButton.addEventListener('click', () => {
 
 // FUNCTIONS
 
-function displayList(items) {
+async function displayList() {
     // - either makes a call with fetchItems or gets passed an object returned from an early server call - but is passed object just the single and not the whole array of objects?!
+    const items = await fetchItems();
 
     //clears DOM
     listEl.textContent = '';
