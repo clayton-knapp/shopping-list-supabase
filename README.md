@@ -49,7 +49,7 @@ EVENTS
     - calls buyItem and passes item id which updates in supabase with bought = true and matches with that item id
     - fetches and displays new list
 
-- Window laod
+- Window load
     - fetches and displays list
 
 
