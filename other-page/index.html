@@ -13,15 +13,32 @@
     <title>Document</title>
 </head>
 
-<body>
-    <header>
-        <div class="gutter-right logo">
-            <img src="../assets/big-logo.png" />
-        </div>
-    </header>    
+<body>  
     <button id="logout">Logout</button>
     <main>
-        <h1>You are logged in!</h1>
+        <h1>Shopping List w/ Supabase!</h1>
+        <h3>You are signed in as: <span id="current-user"></span></h4>
+        <form action="" id=add-item-form>
+            <label for="">
+                Item Name: 
+                <input type="text" name="name" required>
+            </label>
+            <label for="">
+                Quantity: 
+                <input type="number" min=1 name="quantity" value=1>
+            </label>
+            <button>Add to List</button>
+        </form>
+        <button id="delete-button">Delete Shopping List</button>
+        <h3>Your Shopping List:</h3>
+        <div id="list">
+            <!-- shopping list items go here -->
+        </div>
+        <h3>List of Other Users:</h3>
+        <div id="users-list"></div>
+        <h3>Selected User's Shopping List</h3>
+        <div id="selected-users-list"></div>
+
     </main>
     <footer>
         <div class="copy gutter-right">&copy; 2021 Alchemy Code Lab</div>

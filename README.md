@@ -23,3 +23,66 @@ Additional considerations:
   - What needs to live in a persistence layer?
 - Is there some state we need to initialize?
 - Ask: should any of this work be abstracted into functions? (i.e., is the work complicated? can it be resused?)
+
+
+
+HTML SETUP
+- Form to input quantity and item
+    - 2 input fields
+    - submit button
+- Delete all Items Button
+- Empty Div to display list of returned items
+
+
+EVENTS
+- Submit of Item
+    - Grabs user input quantity and item
+    - calls createItem which inserts to Supabase
+    - passes in values, inserts with bought = false (also set up by default in supabase)
+    - fetches and displays new list
+
+- Delete Shopping List click
+    - calls deleteAllItems for that user (match done automatically with RLS and foreign key + user_id in supabase)
+    - fetches and displays new list
+
+- Click of item
+    - calls buyItem and passes item id which updates in supabase with bought = true and matches with that item id
+    - fetches and displays new list
+
+- Window load
+    - fetches and displays list
+
+
+FUNCTIONS
+- displayListItems
+    - either makes a call with fetchItems or gets passed an object returned from an early server call
+    - takes returned item array of objects
+    - uses for loop to pass to renderItem function which returns DOM elements
+    - appends DOM elements to listEl
+
+- renderItem(item)
+    - makes p tags
+    - sets textcontent to quantity and item name
+    - adds classlist of bought or unbought depending
+    - adds classlist of item
+    - returns DOM element
+
+
+
+- STRETCH: see a list of user, on click see that users shopping list
+
+HTML
+- Div for dynamically generated list of users
+- Div for specific users list
+
+EVENTS
+- sign up
+    - add user email and id to new users table
+
+- on load
+    - fetch list of users
+    - display list of users
+
+- on click of user
+    - fetch that specific users list matching with their id
+    - display that users lists

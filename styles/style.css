@@ -129,3 +129,52 @@ footer {
 .auth-container button {
     margin: 10px;
 }
+
+form label{
+    display: block;
+    
+}
+
+.bought {
+    text-decoration:line-through;
+    background-color: green;
+    /* pointer-events: none;  */
+    cursor: pointer;
+}
+
+.unbought {
+    cursor: pointer;
+    background-color: grey;
+}
+
+.item {
+    font-family: cursive;
+    font-size: 2em;
+}
+
+#delete-button {
+    position: fixed;
+    left: 20px;
+    top: 90px;
+    background-color: red;
+    border-radius: 5px;
+    height: 30px;
+}
+
+.list-item {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.delete-button {
+    height: 30px;
+    cursor: pointer;
+}
+
+
+.user-email {
+    /* font-family: cursive; */
+    font-size: 1.25em;
+    cursor: pointer;
+}
