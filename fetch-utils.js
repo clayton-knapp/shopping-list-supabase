@@ -37,10 +37,10 @@ export async function deleteAllItems() {
 }
 
 //BUY ITEM
-export async function buyItem(id) {
+export async function toggleBuyItem(id, bool) {
     const response = await client
         .from('shopping_list')
-        .update({ bought: true })
+        .update({ bought: bool })
         .match({ id: id });
 
     return checkError(response);

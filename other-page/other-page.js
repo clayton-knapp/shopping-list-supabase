@@ -4,7 +4,7 @@ import {
     createItem,
     fetchItems, 
     deleteAllItems,
-    buyItem,
+    toggleBuyItem,
 } from '../fetch-utils.js';
 
 import { renderItem } from '../render-utils.js';
@@ -74,7 +74,11 @@ async function displayList() {
 
         itemEl.addEventListener('click', async()=> {
             // - calls buyItem and passes item id which updates in supabase with bought = true and matches with that item id
-            await buyItem(item.id);
+            if (item.bought === false) {
+                await toggleBuyItem(item.id, true);
+            } else {
+                await toggleBuyItem(item.id, false);
+            }
 
             // - fetches and displays new list
             displayList();
