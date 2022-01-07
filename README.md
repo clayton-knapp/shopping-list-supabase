@@ -32,3 +32,37 @@ HTML SETUP
     - submit button
 - Delete all Items Button
 - Empty Div to display list of returned items
+
+
+EVENTS
+- Submit of Item
+    - Grabs user input quantity and item
+    - calls createItem which inserts to Supabase
+    - passes in values, inserts with bought = false (also set up by default in supabase)
+    - fetches and displays new list
+
+- Delete Shopping List click
+    - calls deleteAllItems for that user (match done automatically with RLS and foreign key + user_id in supabase)
+    - fetches and displays new list
+
+- Click of item
+    - calls buyItem and passes item id which updates in supabase with bought = true and matches with that item id
+    - fetches and displays new list
+
+- Window laod
+    - fetches and displays list
+
+
+FUNCTIONS
+- displayListItems
+    - either makes a call with fetchItems or gets passed an object returned from an early server call
+    - takes returned item array of objects
+    - uses for loop to pass to renderItem function which returns DOM elements
+    - appends DOM elements to listEl
+
+- renderItem(item)
+    - makes p tags
+    - sets textcontent to quantity and item name
+    - adds classlist of bought or unbought depending
+    - adds classlist of item
+    - returns DOM element
