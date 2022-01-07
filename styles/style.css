@@ -171,3 +171,10 @@ form label{
     height: 30px;
     cursor: pointer;
 }
+
+
+.user-email {
+    /* font-family: cursive; */
+    font-size: 1.25em;
+    cursor: pointer;
+}

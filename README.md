@@ -66,3 +66,23 @@ FUNCTIONS
     - adds classlist of bought or unbought depending
     - adds classlist of item
     - returns DOM element
+
+
+
+- STRETCH: see a list of user, on click see that users shopping list
+
+HTML
+- Div for dynamically generated list of users
+- Div for specific users list
+
+EVENTS
+- sign up
+    - add user email and id to new users table
+
+- on load
+    - fetch list of users
+    - display list of users
+
+- on click of user
+    - fetch that specific users list matching with their id
+    - display that users lists

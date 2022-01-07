@@ -18,10 +18,11 @@ export async function createItem(quantity, name) {
 }
 
 // FETCH ITEMS
-export async function fetchItems() {
+export async function fetchItems(id) {
     const response = await client
         .from('shopping_list')
         .select()
+        .match({ user_id: id })
         .order('bought');
 
     return checkError(response);
@@ -55,6 +56,26 @@ export async function deleteItem(id) {
 
     return checkError(response);
 }
+
+// STRETCH - CREATE USER TABLE
+export async function createUser(email) {
+    const response = await client
+        .from('shopping_list_users')
+        .insert({ user_email: email });
+
+    return checkError(response);
+}
+
+// STRETCH - FETCH USERS
+export async function fetchUsers() {
+    const response = await client
+        .from('shopping_list_users')
+        .select();
+    
+    return checkError(response);
+}
+
+
 
 // TEMPLATE AUTH FUNCTIONS
 export async function getUser() {
