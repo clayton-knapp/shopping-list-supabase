@@ -13,6 +13,7 @@ export async function createItem(quantity, name) {
             name: name,
             bought: false
         });
+        // .order('bought');
 
     return checkError(response);
 }
@@ -31,6 +32,16 @@ export async function deleteAllItems() {
     const response = await client
         .from('shopping_list')
         .delete();
+
+    return checkError(response);
+}
+
+//BUY ITEM
+export async function buyItem(id) {
+    const response = await client
+        .from('shopping_list')
+        .update({ bought: true })
+        .match({ id: id });
 
     return checkError(response);
 }

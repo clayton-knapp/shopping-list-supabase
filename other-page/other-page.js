@@ -4,6 +4,7 @@ import {
     createItem,
     fetchItems, 
     deleteAllItems,
+    buyItem,
 } from '../fetch-utils.js';
 
 import { renderItem } from '../render-utils.js';
@@ -70,6 +71,15 @@ async function displayList() {
     // - uses for loop to pass renderItem function objects which returns DOM elements
     for (let item of items) {
         const itemEl = renderItem(item);
+
+        itemEl.addEventListener('click', async()=> {
+            // - calls buyItem and passes item id which updates in supabase with bought = true and matches with that item id
+            await buyItem(item.id);
+
+            // - fetches and displays new list
+            displayList();
+        });
+
 
         // - appends DOM elements to listEl
         listEl.append(itemEl);

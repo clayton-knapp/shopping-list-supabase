@@ -134,3 +134,19 @@ form label{
     display: block;
     
 }
+
+.bought {
+    text-decoration:line-through;
+    background-color: green;
+    pointer-events: none; 
+}
+
+.unbought {
+    cursor: pointer;
+    background-color: grey;
+}
+
+.item {
+    font-family: cursive;
+    font-size: 2em;
+}
