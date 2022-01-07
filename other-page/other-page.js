@@ -5,9 +5,10 @@ import {
     fetchItems, 
     deleteAllItems,
     toggleBuyItem,
+    deleteItem,
 } from '../fetch-utils.js';
 
-import { renderItem } from '../render-utils.js';
+import { renderItem, renderDeleteButton } from '../render-utils.js';
 
 checkAuth();
 
@@ -74,6 +75,7 @@ async function displayList() {
 
         itemEl.addEventListener('click', async()=> {
             // - calls buyItem and passes item id which updates in supabase with bought = true and matches with that item id
+            // STRETCH: toggle buy/unbuy
             if (item.bought === false) {
                 await toggleBuyItem(item.id, true);
             } else {
@@ -81,12 +83,25 @@ async function displayList() {
             }
 
             // - fetches and displays new list
-            displayList();
+            await displayList();
         });
 
+        //STRETCH: deleteItemButton
+        const deleteItemButton = renderDeleteButton();
+
+        
+        deleteItemButton.addEventListener('click', async() =>{
+            await deleteItem(item.id);
+            
+            await displayList();
+        });
+        
+        const itemAndButtonEl = document.createElement('div');
+        itemAndButtonEl.append(itemEl, deleteItemButton);
+        itemAndButtonEl.classList.add('list-item');
 
         // - appends DOM elements to listEl
-        listEl.append(itemEl);
+        listEl.append(itemAndButtonEl);
     }
 
 }

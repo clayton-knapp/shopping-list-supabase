@@ -160,3 +160,14 @@ form label{
     border-radius: 5px;
     height: 30px;
 }
+
+.list-item {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.delete-button {
+    height: 30px;
+    cursor: pointer;
+}

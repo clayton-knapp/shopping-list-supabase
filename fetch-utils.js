@@ -46,6 +46,16 @@ export async function toggleBuyItem(id, bool) {
     return checkError(response);
 }
 
+//DELETE ITEM
+export async function deleteItem(id) {
+    const response = await client
+        .from('shopping_list')
+        .delete()
+        .match({ id: id });
+
+    return checkError(response);
+}
+
 // TEMPLATE AUTH FUNCTIONS
 export async function getUser() {
     return client.auth.session();

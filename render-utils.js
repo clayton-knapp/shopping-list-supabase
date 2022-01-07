@@ -19,3 +19,11 @@ export function renderItem(item){
     return p;
 
 }
+
+export function renderDeleteButton() {
+    const deleteItemButton = document.createElement('button');
+    deleteItemButton.textContent = 'Delete Item';
+    deleteItemButton.classList.add('delete-button');
+
+    return deleteItemButton;
+}
