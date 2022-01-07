@@ -121,20 +121,27 @@ async function displayList() {
 export async function displayUsers() {
     const users = await fetchUsers();
     
+    // get current users id
+    const currentSession = await getUser();
+    const currentUserId = currentSession.user.id;
+
     for (let user of users) {
-        const userEmail = document.createElement('p');
-        userEmail.textContent = '• ' + user.user_email;
-        userEmail.classList.add('user-email');
+        //exclude current signed in user from this list
+        if (user.user_id !== currentUserId) {
 
-        // EVENT LISTENER FOR EACH userEmail
-        userEmail.addEventListener('click', async() => {
-            // - display that users lists
-            await displaySelectedUsersList(user.user_id);
-            
-
-        });
-
-        usersListEl.append(userEmail);
+            const userEmail = document.createElement('p');
+            userEmail.textContent = '• ' + user.user_email;
+            userEmail.classList.add('user-email');
+    
+            // EVENT LISTENER FOR EACH userEmail
+            userEmail.addEventListener('click', async() => {
+                // - display that users lists
+                await displaySelectedUsersList(user.user_id);
+            });
+    
+                
+            usersListEl.append(userEmail);
+        }
     }
 }
 
