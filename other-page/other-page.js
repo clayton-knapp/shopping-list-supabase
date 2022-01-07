@@ -24,6 +24,8 @@ const listEl = document.querySelector('#list');
 const usersListEl = document.getElementById('users-list');
 const selectedUsersListEl = document.getElementById('selected-users-list');
 
+const currentUserEl = document.getElementById('current-user');
+
 
 //EVENT LISTENERS
 
@@ -55,6 +57,11 @@ window.addEventListener('load', async() => {
     // - fetch list of users
     // - display list of users
     await displayUsers();
+
+    //display signed in user email
+    const session = await getUser();
+    currentUserEl.textContent = session.user.email;
+
 });
 
 // DELETE BUTTON
