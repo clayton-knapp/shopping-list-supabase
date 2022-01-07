@@ -3,6 +3,7 @@ import {
     logout,
     createItem,
     fetchItems, 
+    deleteAllItems,
 } from '../fetch-utils.js';
 
 import { renderItem } from '../render-utils.js';
@@ -41,6 +42,15 @@ addItemForm.addEventListener('submit', async(e)=> {
 window.addEventListener('load', async() => {
     // - fetches and displays list
     await displayList();
+});
+
+// DELETE BUTTON
+deleteButton.addEventListener('click', async()=> {
+    // - calls deleteAllItems for that user (match done automatically with RLS and foreign key + user_id in supabase)
+    await deleteAllItems();
+
+    // - fetches and displays new list
+    displayList();
 });
 
 

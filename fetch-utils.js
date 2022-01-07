@@ -26,6 +26,14 @@ export async function fetchItems() {
     return checkError(response);
 }
 
+// DELETE ITEMS
+export async function deleteAllItems() {
+    const response = await client
+        .from('shopping_list')
+        .delete();
+
+    return checkError(response);
+}
 
 // TEMPLATE AUTH FUNCTIONS
 export async function getUser() {
