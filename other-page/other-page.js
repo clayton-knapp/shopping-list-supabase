@@ -1,8 +1,11 @@
 import { 
     checkAuth, 
     logout,
-    createItem 
+    createItem,
+    fetchItems, 
 } from '../fetch-utils.js';
+
+import { renderItem } from '../render-utils.js';
 
 checkAuth();
 
@@ -15,7 +18,7 @@ const listEl = document.querySelector('#list');
 
 //EVENT LISTENERS
 
-// SUBMIT ITEM
+// ADD ITEM
 addItemForm.addEventListener('submit', async(e)=> {
     e.preventDefault();
     //     - Grabs user input quantity and item
@@ -29,7 +32,17 @@ addItemForm.addEventListener('submit', async(e)=> {
     console.log(items);
 
     //     - fetches and displays new list
+    displayList(items);
 
+    addItemForm.reset();
+
+});
+
+// LOAD
+window.addEventListener('load', async() => {
+    // - fetches and displays list
+    const items = await fetchItems();
+    displayList(items);
 });
 
 
@@ -38,3 +51,19 @@ logoutButton.addEventListener('click', () => {
 });
 
 // FUNCTIONS
+
+function displayList(items) {
+    // - either makes a call with fetchItems or gets passed an object returned from an early server call - but is passed object just the single and not the whole array of objects?!
+
+    //clears DOM
+    listEl.textContent = '';
+
+    // - uses for loop to pass renderItem function objects which returns DOM elements
+    for (let item of items) {
+        const itemEl = renderItem(item);
+
+        // - appends DOM elements to listEl
+        listEl.append(itemEl);
+    }
+
+}
