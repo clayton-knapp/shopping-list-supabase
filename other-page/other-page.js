@@ -21,7 +21,6 @@ const deleteButton = document.querySelector('#delete-button');
 const listEl = document.querySelector('#list');
 
 // STRETCH - list of users
-const usersListEl = document.getElementById('users-list');
 const selectedUsersListEl = document.getElementById('selected-users-list');
 const usersDropdown = document.getElementById('users-dropdown');
 
