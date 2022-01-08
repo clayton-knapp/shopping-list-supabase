@@ -75,6 +75,16 @@ export async function fetchUsers() {
     return checkError(response);
 }
 
+// SUPER STRETCH BUY BEFORE DATE
+export async function addBuyBeforeDate(date, id) {
+    const response = await client
+        .from('shopping_list')
+        .update({ buy_before: date })
+        .match({ id: id });
+    
+    return checkError(response);
+}
+
 
 
 // TEMPLATE AUTH FUNCTIONS

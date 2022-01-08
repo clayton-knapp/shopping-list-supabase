@@ -138,7 +138,7 @@ form label{
 .bought {
     text-decoration:line-through;
     background-color: green;
-    /* pointer-events: none;  */
+    pointer-events: none; 
     cursor: pointer;
 }
 
@@ -177,4 +177,13 @@ form label{
     /* font-family: cursive; */
     font-size: 1.25em;
     cursor: pointer;
+}
+
+.time-up {
+    background-color: red;
+    /* pointer-events:none; */
+}
+
+.time-up p {
+    pointer-events:none;
 }

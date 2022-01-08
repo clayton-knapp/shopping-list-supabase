@@ -86,3 +86,25 @@ EVENTS
 - on click of user
     - fetch that specific users list matching with their id
     - display that users lists
+
+
+STRETCH
+Give Item Due Date: Tell user how long they have to buy Item, if past due, style item differently
+
+New Row: Due Date/Time
+- populate by taking created timestamp and adding seconds/min? to it
+    -fetch created timestamp
+    -convert to millisconds with const createdDate = new Date(timestamp);
+    - createdDate.getTime()
+    - buy date: add milliseconds (1 min = 60k ms) +60000
+    - buydate = new Date(new milliseconds)
+    - insert the new timestamp as a row in yr DB
+
+
+    - On display
+        - fetch the buy before date
+        - compare the currently generated date to teh buy before date
+        - subtract to find ms left
+
+
+Everytime it makes new insert - it then does a call, fetches the timestamps, adds time, and updates with buy date
