@@ -8,7 +8,8 @@ import {
     deleteItem,
     fetchUsers,
     getUser,
-    addBuyBeforeDate
+    addBuyBeforeDate,
+    fetchItemTimestamp
 } from '../fetch-utils.js';
 
 import { renderItem, renderDeleteButton } from '../render-utils.js';
@@ -47,7 +48,7 @@ addItemForm.addEventListener('submit', async(e)=> {
     const createdTimestamp = item[0].created_at;
     const createdDate = new Date(createdTimestamp);
     const timeSince1970InMs = createdDate.getTime();
-    const buyBeforeTime = timeSince1970InMs + 60000; //adds 60k ms or 1min
+    const buyBeforeTime = timeSince1970InMs + 10000; //adds 60k ms or 1min
     const buyBeforeDate = new Date(buyBeforeTime);
     await addBuyBeforeDate(buyBeforeDate, item[0].id);
 
@@ -157,9 +158,24 @@ async function displayList() {
         itemEl.addEventListener('click', async()=> {
             // - calls buyItem and passes item id which updates in supabase with bought = true and matches with that item id
             // STRETCH: toggle buy/unbuy
-            if (item.bought === false) {
+            //SUPER STRETCH: add time stuff
+            
+            // need to refetch the time left to see if there actually is time left b/c the old time left was fetched on display
+            const itemRefetch = await fetchItemTimestamp(item.id);
+
+            const buyBeforeTimestamp = itemRefetch.buy_before;
+            const buyBeforeDate = new Date(buyBeforeTimestamp); //is this an object?
+            const buyBeforeMsSince1970 = buyBeforeDate.getTime();
+            
+            const currentDate = new Date();
+            const currentDateMsSince1970 = currentDate.getTime();
+            const newTimeLeftInMs = buyBeforeMsSince1970 - currentDateMsSince1970;
+
+            if (newTimeLeftInMs > 0 && item.bought === false) {
                 await toggleBuyItem(item.id, true);
-            } else {
+            } else if (newTimeLeftInMs < 0 && item.bought === false) {
+                alert('Time is up to buy this item!');
+            } else if (item.bought === true) {
                 await toggleBuyItem(item.id, false);
             }
 

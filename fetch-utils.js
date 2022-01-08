@@ -85,6 +85,16 @@ export async function addBuyBeforeDate(date, id) {
     return checkError(response);
 }
 
+export async function fetchItemTimestamp(id) {
+    const response = await client
+        .from('shopping_list')
+        .select()
+        .match({ id: id })
+        .single();
+
+    return checkError(response);
+}
+
 
 
 // TEMPLATE AUTH FUNCTIONS
