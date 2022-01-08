@@ -7,7 +7,9 @@ import {
     toggleBuyItem,
     deleteItem,
     fetchUsers,
-    getUser
+    getUser,
+    addBuyBeforeDate,
+    fetchItemTimestamp
 } from '../fetch-utils.js';
 
 import { renderItem, renderDeleteButton } from '../render-utils.js';
@@ -40,7 +42,15 @@ addItemForm.addEventListener('submit', async(e)=> {
 
     //     - calls createItem which inserts to Supabase
     //     - passes in values, inserts with bought = false (also set up by default in supabase)
-    await createItem(quantity, name);
+    const item = await createItem(quantity, name);
+ 
+    // SUPER STRETCH TIME STUFF
+    const createdTimestamp = item[0].created_at;
+    const createdDate = new Date(createdTimestamp);
+    const timeSince1970InMs = createdDate.getTime();
+    const buyBeforeTime = timeSince1970InMs + 30000; //adds 60k ms or 1min
+    const buyBeforeDate = new Date(buyBeforeTime);
+    await addBuyBeforeDate(buyBeforeDate, item[0].id);
 
     //     - fetches and displays new list
     displayList();
@@ -101,12 +111,71 @@ async function displayList() {
     for (let item of items) {
         const itemEl = renderItem(item);
 
+        // itemEl.addEventListener('click', async()=> {
+        //     // - calls buyItem and passes item id which updates in supabase with bought = true and matches with that item id
+        //     // STRETCH: toggle buy/unbuy
+        //     if (item.bought === false) {
+        //         await toggleBuyItem(item.id, true);
+        //     } else {
+        //         await toggleBuyItem(item.id, false);
+        //     }
+
+        //     // - fetches and displays new list
+        //     await displayList();
+        // });
+
+        //STRETCH: deleteItemButton
+        const deleteItemButton = renderDeleteButton();
+
+        deleteItemButton.addEventListener('click', async() =>{
+            await deleteItem(item.id);
+            
+            await displayList();
+        });
+
+        const itemAndButtonEl = document.createElement('div');
+
+        //SUPER STRETCH TIME STUFF
+        const buyBeforeTimestamp = item.buy_before;
+        const buyBeforeDate = new Date(buyBeforeTimestamp); //is this an object?
+        const buyBeforeMsSince1970 = buyBeforeDate.getTime();
+        
+        const currentDate = new Date();
+        const currentDateMsSince1970 = currentDate.getTime();
+        const timeLeftInMs = buyBeforeMsSince1970 - currentDateMsSince1970;
+
+        const timeLeftEl = document.createElement('p');
+
+        if (timeLeftInMs > 0 && item.bought === false) {
+            timeLeftEl.textContent = (timeLeftInMs / 1000) + ' seconds left to buy item';
+        } else if (timeLeftInMs < 0 && item.bought === false) {
+            timeLeftEl.textContent = 'Time is up to buy item!';
+            itemAndButtonEl.classList.add('time-up');
+        } else if (item.bought === true) {
+            timeLeftEl.textContent = 'Good job, you bought the item in time.';
+        }
+
         itemEl.addEventListener('click', async()=> {
             // - calls buyItem and passes item id which updates in supabase with bought = true and matches with that item id
             // STRETCH: toggle buy/unbuy
-            if (item.bought === false) {
+            //SUPER STRETCH: add time stuff
+            
+            // need to refetch the time left to see if there actually is time left b/c the old time left was fetched on display
+            const itemRefetch = await fetchItemTimestamp(item.id);
+
+            const buyBeforeTimestamp = itemRefetch.buy_before;
+            const buyBeforeDate = new Date(buyBeforeTimestamp); //is this an object?
+            const buyBeforeMsSince1970 = buyBeforeDate.getTime();
+            
+            const currentDate = new Date();
+            const currentDateMsSince1970 = currentDate.getTime();
+            const newTimeLeftInMs = buyBeforeMsSince1970 - currentDateMsSince1970;
+
+            if (newTimeLeftInMs > 0 && item.bought === false) {
                 await toggleBuyItem(item.id, true);
-            } else {
+            } else if (newTimeLeftInMs < 0 && item.bought === false) {
+                alert('Time is up to buy this item!');
+            } else if (item.bought === true) {
                 await toggleBuyItem(item.id, false);
             }
 
@@ -114,18 +183,7 @@ async function displayList() {
             await displayList();
         });
 
-        //STRETCH: deleteItemButton
-        const deleteItemButton = renderDeleteButton();
-
-        
-        deleteItemButton.addEventListener('click', async() =>{
-            await deleteItem(item.id);
-            
-            await displayList();
-        });
-        
-        const itemAndButtonEl = document.createElement('div');
-        itemAndButtonEl.append(itemEl, deleteItemButton);
+        itemAndButtonEl.append(itemEl, deleteItemButton, timeLeftEl);
         itemAndButtonEl.classList.add('list-item');
 
         // - appends DOM elements to listEl

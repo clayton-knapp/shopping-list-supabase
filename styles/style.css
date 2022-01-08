@@ -178,3 +178,12 @@ form label{
     font-size: 1.25em;
     cursor: pointer;
 }
+
+.time-up {
+    background-color: red;
+    /* pointer-events:none; */
+}
+
+.time-up p {
+    pointer-events:none;
+}
