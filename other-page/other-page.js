@@ -48,7 +48,7 @@ addItemForm.addEventListener('submit', async(e)=> {
     const createdTimestamp = item[0].created_at;
     const createdDate = new Date(createdTimestamp);
     const timeSince1970InMs = createdDate.getTime();
-    const buyBeforeTime = timeSince1970InMs + 10000; //adds 60k ms or 1min
+    const buyBeforeTime = timeSince1970InMs + 30000; //adds 60k ms or 1min
     const buyBeforeDate = new Date(buyBeforeTime);
     await addBuyBeforeDate(buyBeforeDate, item[0].id);
 
